@@ -1,0 +1,43 @@
+{
+  "name": "url-shortener-microservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./server.js --exec babel-node -e js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fendermaniac/url-shortener-microservice.git"
+  },
+  "keywords": [
+    "Express",
+    "body-parser",
+    "Mongo",
+    "Mongoose"
+  ],
+  "author": "Joe LoPresti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fendermaniac/url-shortener-microservice/issues"
+  },
+  "homepage": "https://github.com/fendermaniac/url-shortener-microservice#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.12",
+    "mongoose": "^5.4.5",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}
