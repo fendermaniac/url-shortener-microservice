@@ -1,23 +1,27 @@
 import mongoose from 'mongoose';
 import { UrlSchema } from '../models/model';
-import dns from 'dns';
+import urlExists from 'url-exists';
 
 const Url = mongoose.model('Url', UrlSchema);
 
 export const addShortcut = (req,res) => {
-  let domain = req.body.url;
-  dns.lookup(domain, (err) => {
-    if (err) {
-      res.json({"error": "invalid URL!"})
-    }
-    let newUrl = new Url(req.body);
+  let urlToShorten = req.body.url;
+  let shortcut;
+  Url.find().exec((err, results) => {
+    shortcut = results.length.toString();
+  });
+
+
+    let newUrl = new Url({
+      original_url: urlToShorten,
+      short_url: shortcut
+    });
       newUrl.save((err, url) => {
         if (err) {
           res.send(err);
         }
-        res.json(url);
+        res.json({url});
       }); 
-  });
 };
 
 export const getUrls = (req,res) => {

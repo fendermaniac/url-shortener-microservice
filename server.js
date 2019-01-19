@@ -20,7 +20,6 @@ app.get("/", (req,res)=>{
 
 app.post('/api/shorturl/new', addShortcut);
 app.get('/api/shorturl/all', getUrls);
-
 app.get('/api/shorturl/:shortcut', getUrlWithId);
 
 app.listen(PORT, () => {
