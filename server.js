@@ -20,7 +20,7 @@ app.get("/", (req,res)=>{
 
 app.post('/api/shorturl/new', addShortcut);
 app.get('/api/shorturl/all', getUrls);
-app.get('/api/shorturl/:shortcut', getUrlWithId);
+app.get('/api/shorturl/:short_url', getUrlWithId);
 
 app.listen(PORT, () => {
     console.log(`URL Shortener is running on port ${PORT}...`);
