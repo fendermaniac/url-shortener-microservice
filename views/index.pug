@@ -9,10 +9,8 @@ html
     script(src='./server.js')
   body
     h1 URL Shortener Microservice
-    form#shorten(action='shorten', method='post')
-      label(for='url') Shorten URL:
-      input#url(type='text', name='url')
+    form#shorturl(action='/api/shorturl/new', method='post')
+      label(for='original_url') Shorten URL:
+      input#original_url(type='text', name='original_url')
       input(type='submit', value='Submit')
-    ul
-      each val in url
-        li= val
+
