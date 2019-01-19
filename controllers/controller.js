@@ -5,23 +5,13 @@ import urlExists from 'url-exists';
 const Url = mongoose.model('Url', UrlSchema);
 
 export const addShortcut = (req,res) => {
-  let urlToShorten = req.body.url;
-  let shortcut;
-  Url.find().exec((err, results) => {
+  let shortcut = Url.find().exec((err, results) => {
     shortcut = results.length.toString();
   });
 
+  let newUrl = new Url(req.body);
+  newUrl.save().then(item => res.send(newUrl));
 
-    let newUrl = new Url({
-      original_url: urlToShorten,
-      short_url: shortcut
-    });
-      newUrl.save((err, url) => {
-        if (err) {
-          res.send(err);
-        }
-        res.json({url});
-      }); 
 };
 
 export const getUrls = (req,res) => {
