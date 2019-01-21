@@ -1,12 +1,22 @@
 import mongoose from 'mongoose';
 import { UrlSchema } from '../models/model';
-import urlExists from 'url-exists';
+import dns from 'dns';
+import { isNullOrUndefined } from 'util';
 
 const Url = mongoose.model('Url', UrlSchema);
 
 export const addShortcut = (req,res) => {
+
   let newUrl = new Url(req.body);
-  newUrl.save().then( () => res.json(newUrl) );
+  const cleanDomain = req.body.original_url.replace(/^(https?:|)\/\//, "");
+
+  dns.lookup(cleanDomain, (err, address, family) => {
+    if(address) {
+      newUrl.save().then( () => res.json(newUrl) );
+    } else {
+    res.json({'error': "invalid URL"})
+    }    
+  });    
 };
 
 export const getUrls = (req,res) => {
