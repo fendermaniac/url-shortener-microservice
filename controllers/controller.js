@@ -25,6 +25,6 @@ export const getUrlWithId = (req,res) => {
     if (err) {
       res.send(err);
     }
-    res.json(url);
+    res.redirect(url.original_url);
   }); 
 };
