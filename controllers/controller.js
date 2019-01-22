@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 import { UrlSchema } from '../models/model';
 import dns from 'dns';
-import { isNullOrUndefined } from 'util';
 
 const Url = mongoose.model('Url', UrlSchema);
 
 export const addShortcut = (req,res) => {
 
   let newUrl = new Url(req.body);
-  const cleanDomain = req.body.original_url.replace(/^(https?:|)\/\//, "");
+  const rawDomain = req.body.original_url
+  const cleanDomain = rawDomain.replace(/^(https?:|)\/\//, "");
 
   dns.lookup(cleanDomain, (err, address, family) => {
-    if(address) {
+    if(address && rawDomain.includes('http')) {
       newUrl.save().then( () => res.json(newUrl) );
     } else {
-    res.json({'error': "invalid URL"})
+    res.json({'error': "invalid URL."})
     }    
   });    
 };
@@ -31,10 +31,11 @@ export const getUrls = (req,res) => {
 };
 
 export const getUrlWithId = (req,res) => {
-  Url.findOne({short_url: req.params.short_url}, (err, url) => {
+  Url.findOne({short_url: req.params.shortcut}, (err, url) => {
     if (err) {
       res.send(err);
+    } else {
+      res.redirect(url.original_url);
     }
-    res.redirect(url.original_url);
   }); 
 };
